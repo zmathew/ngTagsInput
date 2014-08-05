@@ -83,7 +83,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('javascript-only', [
-        'test',
+//        'test',
         'ngtemplates',
         'concat',
         'ngAnnotate',
