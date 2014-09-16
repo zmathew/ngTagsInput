@@ -5,7 +5,7 @@
     },
     "name": "ng-tags-input",
     "prettyName": "ngTagsInput",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Tags input directive for AngularJS",
     "license": "MIT",
     "homepage": "http://mbenford.github.io/ngTagsInput",
@@ -13,9 +13,14 @@
         "type": "git",
         "url": "https://github.com/mbenford/ngTagsInput.git"
     },
+    "bugs": {
+        "url": "https://github.com/mbenford/ngTagsInput/issues"
+    },
+    "keywords": ["angular", "tags", "tags-input"],
     "scripts": {
         "test": "grunt test"
     },
+    "main": "build/ng-tags-input.min.js",
     "dependencies": {},
     "devDependencies": {
         "grunt": "0.4.2",

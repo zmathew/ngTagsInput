@@ -36,9 +36,16 @@ module.exports = function(grunt) {
                 outMin: 'build/<%= pkg.name %>.min.js'
             },
             css: {
-                src: 'scss/main.scss',
-                out: 'build/<%= pkg.name %>.css',
-                outMin: 'build/<%= pkg.name %>.min.css'
+                main: {
+                    src: 'scss/main.scss',
+                    out: 'build/<%= pkg.name %>.css',
+                    outMin: 'build/<%= pkg.name %>.min.css'
+                },
+                bootstrap: {
+                    src: 'scss/bootstrap/main.scss',
+                    out: 'build/<%= pkg.name %>.bootstrap.css',
+                    outMin: 'build/<%= pkg.name %>.bootstrap.min.css'
+                }
             },
             html: {
                 src: ['templates/tags-input.html', 'templates/auto-complete.html'],
@@ -47,6 +54,9 @@ module.exports = function(grunt) {
             zip: {
                 unminified: 'build/<%= pkg.name %>.zip',
                 minified: 'build/<%= pkg.name %>.min.zip'
+            },
+            tgz: {
+                npm: 'build/<%= pkg.name %>.tgz'
             },
             spec: {
                 src: 'test/*.spec.js'

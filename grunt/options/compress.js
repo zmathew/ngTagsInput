@@ -9,7 +9,11 @@ module.exports = {
         files : [
             {
                 expand: true,
-                src : ['<%= files.js.outMin %>', '<%= files.css.outMin %>'],
+                src : [
+                    '<%= files.js.outMin %>',
+                    '<%= files.css.main.outMin %>',
+                    '<%= files.css.bootstrap.outMin %>'
+                ],
                 flatten: true
             }
         ]
@@ -21,9 +25,44 @@ module.exports = {
         files : [
             {
                 expand: true,
-                src : ['<%= files.js.out %>', '<%= files.css.out %>'],
+                src : [
+                    '<%= files.js.out %>',
+                    '<%= files.css.main.out %>',
+                    '<%= files.css.bootstrap.out %>'
+                ],
                 flatten: true
             }
+        ]
+    },
+    npm: {
+        options: {
+            archive: '<%= files.tgz.npm %>',
+            mode: 'tgz'
+        },
+        files : [
+            {
+                expand: true,
+                src : [
+                    '<%= files.js.out %>',
+                    '<%= files.css.main.out %>',
+                    '<%= files.css.bootstrap.out %>',
+                    '<%= files.js.outMin %>',
+                    '<%= files.css.main.outMin %>',
+                    '<%= files.css.bootstrap.outMin %>',
+                ],
+                dest: 'package/build',
+                flatten: true
+            },
+            {
+                expand: true,
+                src: [
+                    'README.md',
+                    'package.json'
+                ],
+                dest: 'package/',
+                flatten: true
+            },
+
         ]
     }
 };
