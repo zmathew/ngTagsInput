@@ -1,11 +1,11 @@
 /*!
- * ngTagsInput v2.1.0
+ * ngTagsInput v2.1.1
  * http://mbenford.github.io/ngTagsInput
  *
  * Copyright (c) 2013-2014 Michael Benford
  * License: MIT
  *
- * Generated at 2014-08-30 12:52:00 -0400
+ * Generated at 2014-09-15 22:46:27 -0400
  */
 (function() {
 'use strict';
@@ -100,7 +100,7 @@ var tagsInput = angular.module('ngTagsInput', []);
  *
  * @param {string} ngModel Assignable angular expression to data-bind to.
  * @param {string=} [displayProperty=text] Property to be rendered as the tag label.
- * @param {string=} [input=text] Type of the input element. Only 'text', 'email' and 'url' are supported values.
+ * @param {string=} [type=text] Type of the input element. Only 'text', 'email' and 'url' are supported values.
  * @param {number=} tabindex Tab order of the control.
  * @param {string=} [placeholder=Add a tag] Placeholder text for the control.
  * @param {number=} [minLength=3] Minimum length for a new tag.
@@ -679,12 +679,12 @@ tagsInput.directive('tiTranscludeAppend', function() {
  * @description
  * Automatically sets the input's width so its content is always visible. Used internally by tagsInput directive.
  */
-tagsInput.directive('tiAutosize', function() {
+tagsInput.directive('tiAutosize', ["tagsInputConfig", function(tagsInputConfig) {
     return {
         restrict: 'A',
         require: 'ngModel',
         link: function(scope, element, attrs, ctrl) {
-            var THRESHOLD = 3,
+            var threshold = tagsInputConfig.getTextAutosizeThreshold(),
                 span, resize;
 
             span = angular.element('<span class="input"></span>');
@@ -709,7 +709,7 @@ tagsInput.directive('tiAutosize', function() {
                     span.css('display', 'none');
                 }
 
-                element.css('width', width ? width + THRESHOLD + 'px' : '');
+                element.css('width', width ? width + threshold + 'px' : '');
 
                 return originalValue;
             };
@@ -724,7 +724,7 @@ tagsInput.directive('tiAutosize', function() {
             });
         }
     };
-});
+}]);
 
 /**
  * @ngdoc directive
@@ -754,7 +754,9 @@ tagsInput.directive('tiBindAttrs', function() {
  * initialize options from HTML attributes.
  */
 tagsInput.provider('tagsInputConfig', function() {
-    var globalDefaults = {}, interpolationStatus = {};
+    var globalDefaults = {},
+        interpolationStatus = {},
+        autosizeThreshold = 3;
 
     /**
      * @ngdoc method
@@ -785,6 +787,20 @@ tagsInput.provider('tagsInputConfig', function() {
      */
     this.setActiveInterpolation = function(directive, options) {
         interpolationStatus[directive] = options;
+        return this;
+    };
+
+    /***
+     * @ngdoc method
+     * @name setTextAutosizeThreshold
+     * @methodOf tagsInputConfig
+     *
+     * @param {number} threshold Threshold to be used by the tagsInput directive to re-size the input element based on its contents.
+     *
+     * @returns {object} The service itself for chaining purposes.
+     */
+    this.setTextAutosizeThreshold = function(threshold) {
+        autosizeThreshold = threshold;
         return this;
     };
 
@@ -828,6 +844,9 @@ tagsInput.provider('tagsInputConfig', function() {
                         updateValue(attrs[key] && $interpolate(attrs[key])(scope.$parent));
                     }
                 });
+            },
+            getTextAutosizeThreshold: function() {
+                return autosizeThreshold;
             }
         };
     }];
